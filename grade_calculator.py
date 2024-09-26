@@ -1,4 +1,4 @@
-# Input from the user
+# User input
 
 lab_problems = int(input("Enter the number of labs completed: "))
 quizzes_or_in_class_activities = int(input("Enter the number of quizzes completed: "))
@@ -11,11 +11,11 @@ midterm_2 = int(input("Enter grade for Midterm 2: "))
 final_exam = int(input("Enter grade for Final Exam: "))
 midterms_and_final_prep = int(input("Enter grade for Midterms and Final Preparation: "))
 
-# Grade calculation 
+# Calculations  
 
-lab_weigh = int(lab_problems * 20/6) 
-activity_weigh = int(quizzes_or_in_class_activities * 15/6)
+lab_percent = int(lab_problems * 100/6) 
+activity_percent = int(quizzes_or_in_class_activities * 100/6)
 
-overall_grade = ((int(lab_weigh + activity_weigh + (assignment_1 + assignment_2 + assignment_3 + assignment_4) * 16 + (midterm_1 + midterm_2) * 25 + final_exam * 18 + midterms_and_final_prep * 6)) / 100)
+overall_grade = int(((lab_percent * 20) + (activity_percent * 15) + (assignment_1 * 4) + (assignment_2 * 4) + (assignment_3 * 4) + (assignment_4 * 4) + (midterm_1 * 12.5) + (midterm_2 * 12.5) + (final_exam * 18) + (midterms_and_final_prep * 6)) / 100)
 
 print("Your grade is: ", overall_grade)
