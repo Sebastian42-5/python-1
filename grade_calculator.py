@@ -13,8 +13,15 @@ midterms_and_final_prep = int(input("Enter grade for Midterms and Final Preparat
 
 # Calculations  
 
-lab_percent = int(lab_problems * 100/6) 
-activity_percent = int(quizzes_or_in_class_activities * 100/6)
+if lab_problems > 6: 
+    lab_percent = 100
+else:
+    lab_percent = int(lab_problems * 100/6) 
+
+if quizzes_or_in_class_activities > 6:
+    activity_percent = 100
+else:
+    activity_percent = int(quizzes_or_in_class_activities * 100/6)
 
 overall_grade = int(((lab_percent * 20) + (activity_percent * 15) + (assignment_1 * 4) + (assignment_2 * 4) + (assignment_3 * 4) + (assignment_4 * 4) + (midterm_1 * 12.5) + (midterm_2 * 12.5) + (final_exam * 18) + (midterms_and_final_prep * 6)) / 100)
 
