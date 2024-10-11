@@ -53,7 +53,7 @@ def play_round(player1_hand, player2_hand):
 
     print(f"Player 1 plays: {p1_card[0]} of {p1_card[1]}, Player 2 plays: {p2_card[0]} of {p2_card[1]}")
 
-    result = card_comparison(p1_card , p2_card)
+    result = card_comparison(p1_card, p2_card)
 
     if result == 1: 
         print("Player 1 wins this round!")
@@ -81,18 +81,14 @@ def war(player1_hand, player2_hand):
     if len(player1_hand) < 4 or len(player2_hand) < 4:
         print("Not enough cards for war! It's the end of the game...")
         return 
-    player1_hidden_cards = []
-    player2_hidden_cards = []
-
-    for deck in range(3):
-        if player1_hand:
-            player1_hidden_cards.append(player1_hand.pop(0))
-        if player2_hand: 
-            player2_hidden_cards.append(player2_hand.pop(0)) 
     
+    # the if is to check if Player1's hand still has cards. Same for the Player2's hand
+
+    player1_hidden_cards =[player1_hand.pop(0) for hand in range(3) if player1_hand]
+    player2_hidden_cards = [player2_hand.pop(0) for hand in range(3) if player2_hand]
+
     player1_war_card = player1_hand.pop(0)
     player2_war_card = player2_hand.pop(0)
-
     
     print(f"\nPlayer 1 plays: {player1_war_card[0]} of {player1_war_card[1]}, Player 2 plays: {player2_war_card[0]} of {player2_war_card[1]}")
     
@@ -100,19 +96,16 @@ def war(player1_hand, player2_hand):
     
     
     if result == 1:
-        player1_hand.extend(player1_hidden_cards + player2_hidden_cards + [player1_war_card + player2_war_card])
+        player1_hand.extend(player1_hidden_cards + player2_hidden_cards + [player1_war_card, player2_war_card])
         print("Player 1 has won the war!")
 
     if result == 2:
-        player2_hand.extend(player1_hidden_cards + player2_hidden_cards + [player1_war_card + player2_war_card])        
+        player2_hand.extend(player1_hidden_cards + player2_hidden_cards + [player1_war_card, player2_war_card])        
         print("Player 2 has won the war!")
 
     else :
         print("The war continues!")
         war(player1_hand, player2_hand)
-
-
-
 
     
     """handle the 'war' scenario when cards are equal.
