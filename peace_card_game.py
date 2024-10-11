@@ -11,7 +11,7 @@ suits = ("hearts", "diamonds", "clubs", "spades")
 
 # create a deck of cards
 
-deck = [(suit, rank) for suit in suits for rank in ranks]
+deck = [(rank, suit) for rank in ranks for suit in suits]
 
 # shuffle the deck 
 
@@ -51,12 +51,12 @@ def play_round(player1_hand, player2_hand):
     p1_card = player1_hand.pop(0)
     p2_card = player2_hand.pop(0)
 
-    print(f"Player 1 plays {p1_card}, Player 2 plays {p2_card}")
+    print(f"Player 1 plays: {p1_card[0]} of {p1_card[1]}, Player 2 plays: {p2_card[0]} of {p2_card[1]}")
 
     result = card_comparison(p1_card , p2_card)
 
     if result == 1: 
-        print("Player 1 wins this rounrd!")
+        print("Player 1 wins this round!")
         player1_hand.append(p1_card)
         player1_hand.append(p2_card)
 
@@ -66,8 +66,8 @@ def play_round(player1_hand, player2_hand):
         player2_hand.append(p1_card)
 
     else:
-        print("there is a tie! That means war!")
-        war(player_1hand, player2_hand)
+        print("There is a tie! That means war!")
+        war(player1_hand, player2_hand)
     
     return True 
 
@@ -78,25 +78,37 @@ def play_round(player1_hand, player2_hand):
     # your code here
 
 def war(player1_hand, player2_hand):
-    for deck in range(4):
+    if len(player1_hand) < 4 or len(player2_hand) < 4:
+        print("Not enough cards for war! It's the end of the game...")
+        return 
+    player1_hidden_cards = []
+    player2_hidden_cards = []
 
-        p1_hidden_cards = p1_deck.pop(0) 
-        p2_hidden_cards = p1_deck.pop(0)
-    p1_war_card = p1_hidden_cards[-1]
-    p2_war_card = p2_hidden_cards[-1]
+    for deck in range(3):
+        if player1_hand:
+            player1_hidden_cards.append(player1_hand.pop(0))
+        if player2_hand: 
+            player2_hidden_cards.append(player2_hand.pop(0)) 
+    
+    player1_war_card = player1_hand.pop(0)
+    player2_war_card = player2_hand.pop(0)
 
+    
+    print(f"\nPlayer 1 plays: {player1_war_card[0]} of {player1_war_card[1]}, Player 2 plays: {player2_war_card[0]} of {player2_war_card[1]}")
+    
+    result = card_comparison(player1_war_card, player2_war_card)
+    
+    
     if result == 1:
-       player1_hand.append(p1_war_card)
-       player1_hand.append(p2_war_card)
-       print("player 1 has won the war!")
+        player1_hand.extend(player1_hidden_cards + player2_hidden_cards + [player1_war_card + player2_war_card])
+        print("Player 1 has won the war!")
 
     if result == 2:
-       player2_hand.append(p2_war_card)
-       player2_hand.append(p1_war_card)
-       print("player 2 has won the war!")
+        player2_hand.extend(player1_hidden_cards + player2_hidden_cards + [player1_war_card + player2_war_card])        
+        print("Player 2 has won the war!")
 
     else :
-        print("the war continues!")
+        print("The war continues!")
         war(player1_hand, player2_hand)
 
 
@@ -119,9 +131,10 @@ def play_game():
         print(f"\nRound {round_count} :")
         if not play_round(player1_hand, player2_hand):
             break 
+    # If one of the players runs out of cards, the game ends
         round_count += 1
         time.sleep(1)
-
+    # This is to slow the process of the game
 
     if len(player1_hand) == 0:
         print("\nplayer 2 won the game!")
