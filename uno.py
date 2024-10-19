@@ -8,7 +8,7 @@ import random
 def start_game():
     # the setup of uno
     colours = ("red", "yellow", "green", "blue")
-    ranks = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+    ranks = tuple(range(1, 11))
 
     deck = [(colour, rank) for colour in colours for rank in ranks]
 
@@ -40,35 +40,39 @@ def main_loop(p1, p2, deck, central_card, whose_turn):
 
     while p1 and p2:
         p1_uno_protection = 0
-        p2_uno_protection = 0 
+        p2_uno_protection = 0
 
         print(f"\nplayer {whose_turn + 1}'s turn, here is your hand: {p1} ")
         print(f"\ncentral card is: {central_card}")
-        
-        # give the user a choice : play a card or draw a card
-        # there is also the choice to say uno or call out someone that did not say uno
 
-        if len(p1) or len(p2) > 1:
-            ans = bool(input("you have a choice. you can (0) draw or (1) play"))
-        elif len(p1) or len(p2) == 1:
-            ans = bool(input("you have a choice. you can (0) draw, (1) play, (3) call uno or (4) call out player"))
-                
+        # give the user a choice
+        if len(p1) > 1 or len(p2) > 1:
+            ans = int(input("you have a choice. you can (0) draw or (1) play: "))
+            print(f"User input: {ans}")
+
+        elif len(p1) == 1 or len(p2) == 1:
+            ans = int(input("you have a choice. you can (0) draw, (1) play, (3) call uno or (4) call out player: "))
+        print(f"User input: {ans}")
+        
         if ans == 0:
             drawn_card = deck.pop(0)
             p1.append(drawn_card)
+            print(f"you drew a card: {drawn_card}")
         elif ans == 1:
-            # ask the user for a card to playing
-            player_choice = int(input("which card to play?")) - 1
-            
+            # ask the user for a card to play
+            player_choice = int(input("which card to play? ")) - 1
+
+            if player_choice < 0 or player_choice >= len(p1):
+                print("invalid card choice!")
+                continue
+
             valid = valid_play(central_card, p1[player_choice])
             if valid:
                 central_card = p1.pop(player_choice)
+                print(f"you played: {central_card}")
             else:
                 print("you can't put that card!")
 
-
-            # the code that deals with "playing"
-        # we will set up the data so the next loop works succesfully  
         elif ans == 3:
             if whose_turn == 0:
                 p1_uno_protection += 1
@@ -79,25 +83,28 @@ def main_loop(p1, p2, deck, central_card, whose_turn):
 
         elif ans == 4:
             if whose_turn == 0 and p2_uno_protection != 1:
-                print("player 1 called out player 2, because he forgot to say uno! he must now pick three cards!")
+                print("player 1 called out player 2 for forgetting to say uno! he must now pick three cards!")
                 for _ in range(3):
                     p2_call_out_cards = deck.pop(0)
-                p2.append(p2_call_out_cards)
-                
-            if whose_turn == 1 and p1_uno_protection != 1:
-                print("player 2 called out player 1, because he forgot to say uno! he must now pick three cards!")
+                    p2.append(p2_call_out_cards)
+            elif whose_turn == 1 and p1_uno_protection != 1:
+                print("player 2 called out player 1 for forgetting to say uno! he must now pick three cards!")
                 for _ in range(3):
                     p1_call_out_cards = deck.pop(0)
-                p1.append(p1_call_out_cards)
+                    p1.append(p1_call_out_cards)
             else:
                 print("the player has said uno! you can't call him out!")
 
+        # switch players
         p1, p2 = p2, p1
         whose_turn = (whose_turn + 1) % 2
+
         if len(p1) == 0:
-                print("player 1 has won!")
-        elif len(p1) == 0:
-                print("player 2 has won!")
+            print("player 1 has won!")
+            break
+        elif len(p2) == 0:
+            print("player 2 has won!")
+            break
 
 
         # replace player 1 hand with player 2
