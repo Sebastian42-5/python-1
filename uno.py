@@ -1,5 +1,5 @@
-# Sebastian Soto
-# Im am going to implement "saying uno" to the code 
+# Sebastian soto
+# im am going to implement "saying uno" to the code 
 
 
 
@@ -7,10 +7,10 @@ import random
 
 def start_game():
     # the setup of uno
-    colours = ("Red", "Yellow", "Green", "Blue")
-    ranks = list(range(1, 11))
+    colours = ("red", "yellow", "green", "blue")
+    ranks = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 
-    deck = [(ranks, colour) for rank in ranks for colour in colours]
+    deck = [(colour, rank) for colour in colours for rank in ranks]
 
     # shuffle the deck
 
@@ -32,44 +32,73 @@ def start_game():
     whose_turn = p1
 
     # we choose how this information is encoded
-    # WE DECIDE 0 = player 1, 1 = player 2 
+    # we decide 0 = player 1, 1 = player 2 
 
     main_loop(p1, p2, deck, central_card, 0)
 
 def main_loop(p1, p2, deck, central_card, whose_turn):
 
     while p1 and p2:
+        p1_uno_protection = 0
+        p2_uno_protection = 0 
 
-        print(f"Player {whose_turn + 1}'s turn, here is your hand: {p1} ")
-        print(f"\nCentral card is: {central_card}")
+        print(f"\nplayer {whose_turn + 1}'s turn, here is your hand: {p1} ")
+        print(f"\ncentral card is: {central_card}")
         
         # give the user a choice : play a card or draw a card
+        # there is also the choice to say uno or call out someone that did not say uno
 
-        if len[p1] or len[p2] == 1:
-            ans = bool(input("You have a choice. You can (0) draw , (1) play, (3) call uno or (4) call out player"))
-        else:
-            ans = bool(input("You have a choice. You can (0) draw or (1) play"))
-
-        if ans == 1:
+        if len(p1) or len(p2) > 1:
+            ans = bool(input("you have a choice. you can (0) draw or (1) play"))
+        elif len(p1) or len(p2) == 1:
+            ans = bool(input("you have a choice. you can (0) draw, (1) play, (3) call uno or (4) call out player"))
+                
+        if ans == 0:
+            drawn_card = deck.pop(0)
+            p1.append(drawn_card)
+        elif ans == 1:
             # ask the user for a card to playing
-            player_choice = int(input("Which card to play?")) - 1
+            player_choice = int(input("which card to play?")) - 1
             
             valid = valid_play(central_card, p1[player_choice])
             if valid:
                 central_card = p1.pop(player_choice)
+            else:
+                print("you can't put that card!")
 
 
             # the code that deals with "playing"
-        if ans == 2:
-            drawn_card = deck.pop(0)
-            p1.append(drawn_card)
         # we will set up the data so the next loop works succesfully  
-        if ans == 3:
-            saying_uno = input(
+        elif ans == 3:
+            if whose_turn == 0:
+                p1_uno_protection += 1
+                print("\n player 1 has called uno!")
+            elif whose_turn == 1:
+                p2_uno_protection += 1
+                print("\n player 2 has called uno!")
 
-        if ans == 4:
+        elif ans == 4:
+            if whose_turn == 0 and p2_uno_protection != 1:
+                print("player 1 called out player 2, because he forgot to say uno! he must now pick three cards!")
+                for _ in range(3):
+                    p2_call_out_cards = deck.pop(0)
+                p2.append(p2_call_out_cards)
+                
+            if whose_turn == 1 and p1_uno_protection != 1:
+                print("player 2 called out player 1, because he forgot to say uno! he must now pick three cards!")
+                for _ in range(3):
+                    p1_call_out_cards = deck.pop(0)
+                p1.append(p1_call_out_cards)
+            else:
+                print("the player has said uno! you can't call him out!")
+
         p1, p2 = p2, p1
         whose_turn = (whose_turn + 1) % 2
+        if len(p1) == 0:
+                print("player 1 has won!")
+        elif len(p1) == 0:
+                print("player 2 has won!")
+
 
         # replace player 1 hand with player 2
 
