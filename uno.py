@@ -8,7 +8,7 @@ import random
 def start_game():
     # the setup of uno
     colours = ("red", "yellow", "green", "blue")
-    ranks = tuple(range(1, 11))
+    ranks = tuple(range(0, 11))
 
     deck = [(colour, rank) for colour in colours for rank in ranks]
 
