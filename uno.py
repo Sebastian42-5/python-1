@@ -8,7 +8,7 @@ import random
 def start_game():
     # the setup of uno
     colours = ("red", "yellow", "green", "blue")
-    ranks = tuple(range(0, 11))
+    ranks = tuple(range(0, 11)) 
 
     deck = [(colour, rank) for colour in colours for rank in ranks]
 
@@ -57,6 +57,10 @@ def main_loop(p1, p2, deck, central_card, whose_turn):
         if ans == 0:
             drawn_card = deck.pop(0)
             p1.append(drawn_card)
+            if whose_turn == 0:
+                p1_uno_protection == False
+            if whose_turn == 1:
+                p2_uno_protection == False 
             print(f"you drew a card: {drawn_card}")
         elif ans == 1:
             # ask the user for a card to play
@@ -106,7 +110,12 @@ def main_loop(p1, p2, deck, central_card, whose_turn):
             print("player 2 has won!")
             break
 
-
+    
+    # chances are, at the end of the ai_turn, they will have modified the central_card
+    # thsi function should return the new central_card
+    # Is there a playable card in the ai_hand
+    # loop over all the cards in the ai_hand
+    # if we find a valid card (using valid_card)
         # replace player 1 hand with player 2
 
             # the code that deals with drawing 
