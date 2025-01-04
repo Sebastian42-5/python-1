@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sharks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e0f7fa;
+        }
+        header {
+            background-color: #34495e;
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+        }
+        nav {
+            background-color: #1a5276;
+            padding: 0.5rem;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 1rem;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        main {
+            padding: 2rem;
+        }
+        h1, h2 {
+            color: #1a5276;
+        }
+        footer {
+            background-color: #004d40;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: 2rem;
+        }
+        .shark-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+        }
+        .shark {
+            border: 1px solid #004d40;
+            border-radius: 8px;
+            padding: 1rem;
+            background-color: white;
+            max-width: 300px;
+            text-align: center;
+        }
+        .shark img {
+            width: 100%;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to the World of Sharks</h1>
+    </header>
+    <nav>
+        <a href="#about">About Sharks</a>
+        <a href="#types">Types of Sharks</a>
+        <a href="#conservation">Conservation</a>
+    </nav>
+    <main>
+        <section id="about">
+            <h2>About Sharks</h2>
+            <p>Sharks are a group of elasmobranch fish characterized by a cartilaginous skeleton, gill slits, and a streamlined body. They have existed for over 400 million years!</p>
+        </section>
+        <section id="types">
+            <h2>Types of Sharks</h2>
+            <div class="shark-list">
+                <div class="shark">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/56/White_shark.jpg" alt="Great White Shark">
+                    <h3>Great White Shark</h3>
+                    <p>The Great White is one of the most well-known shark species, famous for its size and strength.</p>
+                </div>
+                <div class="shark">
+                    <img src="https://i.natgeofe.com/n/18c79c2b-601e-4a1b-a290-49c11be58c13/hammerhead-sharks_thumb_2x1.jpg" alt="Hammerhead Shark">
+                    <h3>Hammerhead Shark</h3>
+                    <p>Hammerhead Sharks are easily recognizable by their unique hammer-shaped heads.</p>
+                </div>
+                <div class="shark">
+                    <img src="https://c02.purpledshub.com/uploads/sites/62/2017/11/Whale-shark.-GettyImages-542994454-d481e80.jpg?webp=1&w=1200" alt="Whale Shark">
+                    <h3>Whale Shark</h3>
+                    <p>Whale Sharks are the largest fish in the ocean and are gentle filter feeders.</p>
+                </div>
+            </div>
+        </section>
+        <section id="conservation">
+            <h2>Shark Conservation</h2>
+            <p>Sharks are crucial to marine ecosystems, but many species are endangered due to overfishing and habitat destruction. Protecting sharks helps maintain a balanced ocean environment.</p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Sharks Website. All rights reserved.</p>
+    </footer>
+</body>
+</html>
+
